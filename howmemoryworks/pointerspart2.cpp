@@ -27,5 +27,7 @@ int main() {
 
     reference(x);
     cout << "X: updated; " << x << endl;
+
+
     return 0;
 }

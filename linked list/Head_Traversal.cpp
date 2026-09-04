@@ -25,9 +25,9 @@ int main()
     // because when you use the head then head = head->next you will now lose the head
     // rule here never lose the head or else everything now wiill be lose.
 
-    Node *current = head; // this will store the memory address of head
+    Node *current = head; // this will store the memory address of the head
 
-    while (current != second)
+    while (current != nullptr)
     {
         cout << current->data << endl;
 
