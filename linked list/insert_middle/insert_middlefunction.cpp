@@ -11,7 +11,7 @@ void insert_end( Node* position, int x)
 {
     Node* newNode = new Node;
     newNode->data = x;
-    position->next = newNode;
+    position;
 
     newNode->next = position->next;
     position->next = newNode;
