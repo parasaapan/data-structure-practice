@@ -94,98 +94,143 @@ void Add_Student_End(Node *&head)
     current->next = newNode;
 }
 
-void Traverse(Node *head)
+void Traverse(Node *head, bool &istrue)
 {
     if (head == nullptr)
     {
-        cout << "EMPTU LILNKED LIST ADD FIRST\n";
+        cout << "EMPTY LINKED LIST ADD FIRST\n";
+        istrue = false;
         return;
     }
 
     Node *current = head;
     int count = 1;
-    
 
-        while (current != nullptr)
-        {
-            cout << "STUDENT " << count << endl;
-            cout << "ID: " << current->id << endl;
-            cout << "Name: " << current->name << endl;
-            cout << "Grade: " << current->grade << endl;
-            current = current->next;
-            count++;
-        }
-        
-    
+    while (current != nullptr)
+    {
+        cout << "STUDENT " << count << endl;
+        cout << "ID: " << current->id << endl;
+        cout << "Name: " << current->name << endl;
+        cout << "Grade: " << current->grade << endl;
+        current = current->next;
+        count++;
+    }
+}
+
+void Delete_STUDENT_FROM_BEGIN(Node *&head)
+{
+    if (head == nullptr)
+    {
+        cout << "NO STUDENT TO DELETE\n";
+        return;
+    }
+
+    Node *temp = head;
+    head = head->next;
+    delete temp;
 }
 
 void Add_Student_AtPosition(Node *&head)
 {
-    int position, id;
+    int id, find_id;
+
     string name;
     double grade;
 
-    // Ask the user for the insertion position in the linked list.
-    cout << "Enter position to insert: ";
-    cin >> position;
-    cin.ignore();
+    cout << "ENTER BEFORE ID YOU WANT TO INSERT NEW STUDENT: ";
+    cin >> find_id;
 
-    // Read the student ID.
-    cout << "Enter Student ID: ";
-    cin >> id;
-    cin.ignore();
+    Node *current = head;
+    bool isfound = false;
+    while (current != nullptr)
+    {
+        if (current->id == find_id)
+        {
+            isfound = true;
+            break;
+        }
+        current = current->next;
+    }
 
-    // Read the student name, allowing spaces in the name.
-    cout << "Enter Student Name: ";
-    getline(cin, name);
+    if (!isfound)
+    {
+        cout << "STUDENT NOT FOUND \n";
+        return;
+    }
 
-    // Read the student grade.
-    cout << "Enter Student Grade: ";
-    cin >> grade;
-    cin.ignore();
-
-    // Create a new node to store the new student record.
     Node *newNode = new Node;
+
+    cout << "ENTER ID OF NEW STUDENT: ";
+    cin >> id;
+    cout << "ENTER NAME: ";
+    cin >> name;
+    cout << "ENTER GRADE: ";
+    cin >> grade;
+
     newNode->id = id;
     newNode->name = name;
     newNode->grade = grade;
-    newNode->next = nullptr;
 
-    // If the list is empty or the user wants to insert at the beginning,
-    // place the new node at the head of the list.
-    if (head == nullptr || position <= 1)
-    {
-        newNode->next = head;
-        head = newNode;
-        return;
-    }
-
-    // Traverse the list to find the node before the insertion position.
-    Node *current = head;
-    int count = 1;
-
-    while (current != nullptr && count < position - 1)
-    {
-        current = current->next;
-        count++;
-    }
-
-    // If the position is beyond the last element, append the new node at the end.
-    if (current == nullptr)
-    {
-        Node *tail = head;
-        while (tail->next != nullptr)
-        {
-            tail = tail->next;
-        }
-        tail->next = newNode;
-        return;
-    }
-
-    // Insert the new node after the node found in the traversal.
     newNode->next = current->next;
     current->next = newNode;
 }
+
+void Delete_Student_end(Node *&head)
+{
+    if (head == nullptr)
+    {
+        cout << "NO STUDENT TO DELETE\n";
+        return;
+    }
+
+    if(head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+
+    Node* current = head;
+    while(current->next->next != nullptr) {
+        current->next;
+    }
+    Node* temp = current->next;
+    current->next = nullptr;
+    delete temp;
+}
+
+
+void Delete_Student_At_Position(Node*& head) {
+    if(head->next == nullptr) {
+        Delete_STUDENT_FROM_BEGIN(head);
+        return;
+    }
+
+    int targetid;
+    cout << "ENTER TARGET ID: ";
+    cin >> targetid;
+
+    Node* current = head;
+    Node* previous = nullptr;
+    bool isfound = false;
+
+    while(current != nullptr)
+ {
+    previous = current; // this will hold the current
+    current = current->next; // this will hold next the current
+    if(current->id == targetid) {
+        isfound = true;
+        previous->next = current->next;
+        delete current;
+        return;
+    }
+ }    
+
+ if(!isfound) {
+    cout << "STUDNT NOT FOUND\n";   
+ }
+}
+
 
 int main()
 {
@@ -195,6 +240,7 @@ int main()
     int choice;
     do
     {
+        bool istrue = true;
         menu(choice);
         switch (choice)
         {
@@ -206,19 +252,26 @@ int main()
             break;
 
         case 3:
-            Traverse(head);
+            Traverse(head, istrue);
+            if (istrue)
+            {
+                Add_Student_AtPosition(head);
+            }
             break;
 
         case 4:
-
+            Delete_STUDENT_FROM_BEGIN(head);
             break;
 
         case 5:
-
+            Delete_Student_end(head);
             break;
 
         case 6:
-
+            Traverse(head,istrue);
+            if(istrue) {
+                Delete_Student_At_Position(head);
+            }
             break;
 
         case 7:

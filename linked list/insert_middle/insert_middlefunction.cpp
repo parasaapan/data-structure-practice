@@ -7,7 +7,7 @@ struct Node
     Node *next;
 };
 
-void insert_end( Node* position, int x)
+void insert_mid( Node* position, int x)
 {
     Node* newNode = new Node;
     newNode->data = x;
@@ -77,7 +77,7 @@ int main()
 
     print(head, current);
     search(head, current, position,x);
-    insert_end(position,x);
+    insert_mid(position,x);
 
     print(head, current);
 
