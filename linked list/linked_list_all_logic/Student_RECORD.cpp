@@ -177,32 +177,40 @@ void Add_Student_AtPosition(Node *&head)
 
 void Delete_Student_end(Node *&head)
 {
+    // If the list is empty, there is nothing to remove.
     if (head == nullptr)
     {
         cout << "NO STUDENT TO DELETE\n";
         return;
     }
 
-    if(head->next == nullptr) {
+    // If there is only one node, delete it and set the head to null.
+    if (head->next == nullptr)
+    {
         delete head;
         head = nullptr;
         return;
     }
 
-
-    Node* current = head;
-    while(current->next->next != nullptr) {
-        current->next;
+    // Move to the node just before the last one.
+    Node *current = head;
+    while (current->next->next != nullptr)
+    {
+        current = current->next; // Important: advance the pointer to the next node.
     }
-    Node* temp = current->next;
+
+    // Delete the last node and disconnect it from the list.
+    Node *temp = current->next;
     current->next = nullptr;
     delete temp;
 }
 
-
-void Delete_Student_At_Position(Node*& head) {
-    if(head->next == nullptr) {
-        Delete_STUDENT_FROM_BEGIN(head);
+void Delete_Student_At_Position(Node *&head)
+{
+    // Safety check: empty list cannot be deleted.
+    if (head == nullptr)
+    {
+        cout << "NO STUDENT TO DELETE\n";
         return;
     }
 
@@ -210,25 +218,35 @@ void Delete_Student_At_Position(Node*& head) {
     cout << "ENTER TARGET ID: ";
     cin >> targetid;
 
-    Node* current = head;
-    Node* previous = nullptr;
-    bool isfound = false;
-
-    while(current != nullptr)
- {
-    previous = current; // this will hold the current
-    current = current->next; // this will hold next the current
-    if(current->id == targetid) {
-        isfound = true;
-        previous->next = current->next;
-        delete current;
+    // Case 1: the node to delete is the head.
+    if (head->id == targetid)
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
         return;
     }
- }    
 
- if(!isfound) {
-    cout << "STUDNT NOT FOUND\n";   
- }
+    // Case 2: search the list and remove the matching node.
+    Node *current = head;
+    Node *previous = nullptr;
+
+    while (current != nullptr)
+    {
+        if (current->id == targetid)
+        {
+            // previous points to the node before the target,
+            // so we reconnect previous->next to current->next.
+            previous->next = current->next;
+            delete current;
+            return;
+        }
+
+        previous = current;
+        current = current->next;
+    }
+
+    cout << "STUDENT NOT FOUND\n";
 }
 
 
