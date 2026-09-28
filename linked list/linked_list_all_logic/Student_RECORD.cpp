@@ -218,7 +218,6 @@ void Delete_Student_At_Position(Node *&head)
     cout << "ENTER TARGET ID: ";
     cin >> targetid;
 
-    // Case 1: the node to delete is the head.
     if (head->id == targetid)
     {
         Node *temp = head;
@@ -227,18 +226,19 @@ void Delete_Student_At_Position(Node *&head)
         return;
     }
 
-    // Case 2: search the list and remove the matching node.
     Node *current = head;
     Node *previous = nullptr;
 
-    while (current != nullptr)
+    while (current!= nullptr)
     {
+
         if (current->id == targetid)
         {
-            // previous points to the node before the target,
-            // so we reconnect previous->next to current->next.
+            // 20               30 ->NEXT = 40
             previous->next = current->next;
+            // NOW THE 20 IS NOW CONNECTED TO THE 40
             delete current;
+            // YOU CAN SAFELY DELET THE 30 NOW;
             return;
         }
 
@@ -249,6 +249,102 @@ void Delete_Student_At_Position(Node *&head)
     cout << "STUDENT NOT FOUND\n";
 }
 
+void Search_Student_ByID(Node *head)
+{
+    if (head == nullptr)
+    {
+        cout << "EMPTY LIST ADD FIRST";
+        return;
+    }
+
+    if (head->next == nullptr)
+    {
+        cout << "ONLY ONE STUDENT HERE: \n";
+        cout << " STUDENT 1: \n";
+        cout << "ID: " << head->id << endl;
+        cout << "NAME: " << head->name << endl;
+        cout << "GRADE: " << head->grade << endl;
+        return;
+    }
+
+    int targetId;
+    cout << "ENTER  TARGET ID: ";
+    cin >> targetId;
+
+    Node *current = head;
+    int position = 0;
+    while (current != nullptr)
+    {
+        position++;
+        if (current->id == targetId)
+        {
+            cout << "STUDENT FOUND\n";
+            cout << "STUDENT " << position << endl;
+            cout << endl;
+            cout << "ID: " << current->id << endl;
+            cout << "NAME: " << current->name << endl;
+            cout << "GRADE: " << current->grade << endl;
+            return;
+        }
+
+        current = current->next;
+    }
+
+    cout << "STUDENT NOT FOUND";
+}
+
+void Update_Student(Node* & head) {
+    if(head == nullptr) {
+        cout << "NO STUDENT ADD FIRST\n";
+        return;
+    }
+
+     int targetId;
+    cout << "ENTER  TARGET ID: ";
+    cin >> targetId;
+
+    Node *current = head;
+    int position = 0;
+    while (current != nullptr)
+    {
+        position++;
+        if (current->id == targetId)
+        {
+            cout << "STUDENT FOUND\n";
+            cout << "STUDENT " << position << endl;
+            cout << endl;
+            cout << "----CURRENT STUDENT INFORMATION----\n";
+            cout << "ID: " << current->id << endl;
+            cout << "NAME: " << current->name << endl;
+            cout << "GRADE: " << current->grade << endl;
+
+
+            string name;
+            int id;
+            double grade;
+
+            cout << "ENTER NEW ID: ";
+            cin >> id;
+            cin.ignore();
+            cout << "ENTER NEW NAME: ";
+            getline(cin, name);
+
+            cout << "ENTER NEW GRADE: ";
+            cin >> grade;
+
+            current->id = id;
+            current->name = name;
+            current->grade = grade;
+        
+            return;
+        }
+
+        current = current->next;
+    }
+
+    cout << "STUDENT NOT FOUND\n";
+
+}
 
 int main()
 {
@@ -286,21 +382,22 @@ int main()
             break;
 
         case 6:
-            Traverse(head,istrue);
-            if(istrue) {
+            Traverse(head, istrue);
+            if (istrue)
+            {
                 Delete_Student_At_Position(head);
             }
             break;
 
         case 7:
-
+            Search_Student_ByID(head);
             break;
         case 8:
-
+            Update_Student(head);
             break;
 
         case 9:
-
+            Traverse(head,istrue);
             break;
 
         case 10:
