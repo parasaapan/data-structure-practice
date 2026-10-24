@@ -129,6 +129,10 @@ class DoublyLinkedList {
     void deleteAtposition(int pos) {
         if(head == nullptr) {
             return;
+        }   
+
+        if(pos  < 1) {
+            return;
         }
 
         Node* current = head;
@@ -137,7 +141,7 @@ class DoublyLinkedList {
             current = current->next;
         }   
 
-
+        
         if(current == nullptr) {
             cout << "INVALID POSITION";
             return;
